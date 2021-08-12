@@ -8,8 +8,6 @@ import ru.geekbrains.summer.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.summer.market.model.Order;
 import ru.geekbrains.summer.market.model.OrderItem;
 import ru.geekbrains.summer.market.model.User;
-import ru.geekbrains.summer.market.repositories.OrderItemRepository;
-import ru.geekbrains.summer.market.services.OrderItemService;
 import ru.geekbrains.summer.market.services.OrderService;
 import ru.geekbrains.summer.market.services.UserService;
 
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 public class OrderController {
     private final OrderService orderService;
     private final UserService userService;
-    private final OrderItemService orderItemService;
 
 
     @PostMapping
@@ -38,10 +35,9 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public List<ProductDto> getProductsDtoByOrder(@PathVariable Long orderId){
-        List<OrderItem> orderItemList = orderItemService.findAllByOrder(orderId);
-        List<ProductDto> productDtoList = orderItemList.stream().map(orderItem -> new ProductDto(orderItem.getProduct())).collect(Collectors.toList());
+    public List<ProductDto> getProductsDtoByOrder(@PathVariable Long id){
+        Order order  = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        List<ProductDto> productDtoList = order.getItems().stream().map(orderItem -> new ProductDto(orderItem.getProduct())).collect(Collectors.toList());
         return productDtoList;
-
     }
 }
