@@ -15,6 +15,7 @@ import ru.geekbrains.summer.market.utils.Cart;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +48,10 @@ public class OrderService {
 
     public List<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    public Optional<Order> findById(Long id) {
+        return orderRepository.findById(id);
     }
 
 }

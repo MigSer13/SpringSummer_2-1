@@ -15,8 +15,8 @@ angular.module('app').controller('ordersController', function ($scope, $http, $l
             url: contextPath + '/api/v1/orders/' + orderId,
             method: 'GET'
         }).then(function (response) {
-            $scope.products = response.data;
             console.log(response);
+            $scope.products = response.data;
         });
      }
 
@@ -31,6 +31,6 @@ angular.module('app').controller('ordersController', function ($scope, $http, $l
          });
      };
 
-
     $scope.loadOrders();
+
 });
